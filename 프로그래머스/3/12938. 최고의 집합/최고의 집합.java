@@ -1,6 +1,6 @@
 import java.util.*;
 /*
-    solution - 1 false : 반례 존재 많음
+    solution - 1 fail : 반례 존재 많음
     greedy
     
     가능한 중앙값과 가까운 자연수를 원소로 같는 집합을 만들기
@@ -20,7 +20,6 @@ import java.util.*;
 class Solution {
     public int[] solution(int n, int s) {
         int[] answer = new int[n];
-        int sum = 0;
         
         if(s < n) {
             return new int [] {-1};
