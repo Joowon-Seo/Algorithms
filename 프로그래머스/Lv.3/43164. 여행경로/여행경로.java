@@ -38,6 +38,8 @@ class Solution {
 					if (Objects.equals(answer[i - 1], result[i - 1]) && answer[i].compareTo(result[i]) > 0) {
 						answer = result;
 						break;
+                        
+                     // 더 느린 케이스가 나왔을 경우, 더 비교하지 않고, pass
 					} else if (Objects.equals(answer[i - 1], result[i - 1]) && answer[i].compareTo(result[i]) < 0) {
 						break;
 					}
