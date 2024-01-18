@@ -1,4 +1,5 @@
 import java.util.*;
+
 class Solution {
     public int solution(int m, int n, int[][] puddles) {
         int[][] map = new int[n + 1][m + 1];
