@@ -16,9 +16,10 @@ class Solution {
 			return factorial[m + n - 2] / (factorial[m - 1] * factorial[n - 1]) % 1000000007;
 		}
 
-		for (int i = 0; i < puddles.length; i++) {
+        for (int i = 0; i < puddles.length; i++) {
 				data[puddles[i][1]][puddles[i][0]] = true;
 			}
+		
 
 		map[1][1] = 1;
 
@@ -46,9 +47,9 @@ class Solution {
 			}
 		}
 
-//		for (int i = 0; i < map.length; i++) {
-//			System.out.println(Arrays.toString(map[i]));
-//		}
+// 		for (int i = 0; i < map.length; i++) {
+// 			System.out.println(Arrays.toString(map[i]));
+// 		}
 
 		return map[n][m];
     }
