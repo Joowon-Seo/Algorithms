@@ -13,58 +13,93 @@ class Solution {
 	// 2. 최대로 갈 수 있는 라운드에서 하나를 뽑으면 만들 수 있는가?
 	// 2-1. 그 때 코인이 있는지 어떻게 아는가?
 	// 2-2. 결국 그 조합을 사용한다는 것은 코인을 2개 사용하는 것 따라서 코인을 사용하여 미리 뽑는다. 코인 개수를 관리 할 수 있음
-    
-    static int n;
-    
+        
     public int solution(int coin, int[] cards) {
-        n = cards.length;
-        
-        boolean hand[] = new boolean[n+1];
-        boolean paid[] = new boolean[n+1];
-        int coinLeft = coin;
-        
-        for(int i = 0; i < n/3; i++){
-            hand[cards[i]] = true;
-            paid[cards[i]] = true;
-        }
-        
         int answer = 1;
-        for(int i = n/3; i < n; i+=2){
-            if(coinLeft > 0){
-                hand[cards[i]] = true;
-                hand[cards[i+1]] = true;
-            }
-            
-            boolean pass = false;
-            int minCost = 3;
-            int cardThrown = -1;
-            for(int j = 1; j <= n; j++){
-                if(!hand[j]){
-                    continue;
-                }
-                
-                if(hand[n + 1 - j]){
-                    int cost = (paid[j] ? 0 : 1) + (paid[n + 1 - j] ? 0 : 1);
-                    if(coinLeft < cost || minCost <= cost){
-                        continue;
-                    }
-                 
-                    pass = true;
-                    cardThrown = j;
-                    minCost = cost;
-                }
-            }
-            
-            if(!pass){
-                break;
-            } 
-            hand[cardThrown] = false;
-            hand[n + 1 - cardThrown] = false;
-            coinLeft -= minCost;
-                
-            answer ++;
-        }
+		int n = cards.length;
+		int life = 0;
+		Map<Integer, Integer> hand = new HashMap<>();
+		Queue<Integer> queue = new LinkedList<>();
+		Map<Integer, Integer> data = new HashMap<>();
+		PriorityQueue<Integer> coin1 = new PriorityQueue<>();
+		PriorityQueue<Integer> coin2 = new PriorityQueue<>();
 
-        return answer;
+		for (int i = 0; i < cards.length; i++) {
+			if (i < cards.length/3) {
+				if (hand.containsKey(n + 1 - cards[i])) {
+					hand.remove(n + 1 - cards[i]);
+					life++;
+				} else {
+					hand.put(cards[i], 0);
+				}
+			} else {
+				data.put(cards[i], (i - cards.length/3)/2 + 1);
+				queue.add(cards[i]);
+			}
+
+		}
+
+		for (int card : hand.keySet()) {
+			hand.put(card, data.get(n + 1 - card));
+		}
+
+		while (!queue.isEmpty()) {
+			int card1 = queue.poll();
+			int card2 = queue.poll();
+
+			System.out.println("round = " + answer + " coin = " + coin + " card1 = " + card1 + " card2 = " + card2 + " life = " + life);
+
+			if (hand.containsKey(n + 1 - card1)) {
+				coin1.add(answer);
+				hand.remove(n + 1 - card1);
+			}
+
+			if (hand.containsKey(n + 1 - card2)) {
+				coin1.add(answer);
+				hand.remove(n + 1 - card2);
+			}
+
+			if (data.containsKey(n + 1 - card1)) {
+				coin2.add(data.get(n + 1 - card1));
+				data.remove(card1);
+			}
+
+			if (data.containsKey(n + 1 - card2)) {
+				coin2.add(data.get(n + 1 - card2));
+				data.remove(card2);
+			}
+
+			if (card1 + card2 == n + 1) {
+				coin2.add(answer);
+			}
+
+			if (life == 0) {
+				if (coin == 0) {
+					break;
+				}
+				if (!coin1.isEmpty()) {
+					System.out.println("coin 1개 사용");
+					coin1.poll();
+					coin--;
+					answer++;
+					continue;
+				}
+
+				if (coin >= 2 && !coin2.isEmpty() && coin2.peek() <= answer) {
+					System.out.println("coin 2개 사용");
+					coin2.poll();
+					coin-=2;
+					answer++;
+					continue;
+				}
+
+				break;
+			} else {
+				answer++;
+				life--;
+			}
+
+		}
+		return answer;
     }
 }
