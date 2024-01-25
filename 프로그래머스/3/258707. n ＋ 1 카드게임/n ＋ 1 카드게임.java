@@ -47,7 +47,7 @@ class Solution {
 			int card1 = queue.poll();
 			int card2 = queue.poll();
 
-			System.out.println("round = " + answer + " coin = " + coin + " card1 = " + card1 + " card2 = " + card2 + " life = " + life);
+			// System.out.println("round = " + answer + " coin = " + coin + " card1 = " + card1 + " card2 = " + card2 + " life = " + life);
 
 			if (hand.containsKey(n + 1 - card1)) {
 				coin1.add(answer);
@@ -78,7 +78,7 @@ class Solution {
 					break;
 				}
 				if (!coin1.isEmpty()) {
-					System.out.println("coin 1개 사용");
+					// System.out.println("coin 1개 사용");
 					coin1.poll();
 					coin--;
 					answer++;
@@ -86,7 +86,7 @@ class Solution {
 				}
 
 				if (coin >= 2 && !coin2.isEmpty() && coin2.peek() <= answer) {
-					System.out.println("coin 2개 사용");
+					// System.out.println("coin 2개 사용");
 					coin2.poll();
 					coin-=2;
 					answer++;
