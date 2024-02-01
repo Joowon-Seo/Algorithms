@@ -52,7 +52,6 @@ class Solution {
 		}
 
 		while (!deliveryPq.isEmpty()) {
-			// System.out.println("배달만 남았을 때");
 			int[] d = deliveryPq.poll();
 			answer += d[0];
 			if (d[1] > cap) {
@@ -66,14 +65,13 @@ class Solution {
 				if (cnt + temp[1] <= cap) {
 					cnt += temp[1];
 				} else {
-					deliveryPq.add(new int[] {temp[0], temp[1] - (cap - cnt)});
+					deliveryPq.add(new int[] {temp[0], cap - cnt});
 					cnt = cap;
 				}
 			}
 		}
 
 		while (!pickupPq.isEmpty()) {
-			// System.out.println("수거만 남았을 때");
 			int[] p = pickupPq.poll();
 			answer += p[0];
 
@@ -88,7 +86,7 @@ class Solution {
 				if (cnt + temp[1] <= cap) {
 					cnt += temp[1];
 				} else {
-					pickupPq.add(new int[] {temp[0], temp[1] - (cap - cnt)});
+					pickupPq.add(new int[] {temp[0], cap - cnt});
 					cnt = cap;
 				}
 			}
