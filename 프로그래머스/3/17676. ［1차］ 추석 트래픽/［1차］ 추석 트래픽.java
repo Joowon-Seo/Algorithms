@@ -11,8 +11,8 @@ class Solution {
 			double endTime = Double.parseDouble(endTimeData[0]) * 3600 + Double.parseDouble(endTimeData[1])* 60 + Double.parseDouble(endTimeData[2]);
 			double startTime = endTime - Double.parseDouble(traffic[2].substring(0, traffic[2].length() - 1)) + 0.001;
 
-			start[i] = (int)(startTime * 1000);
-			end[i] = (int)(endTime * 1000) + 1000;
+			start[i] = (int) (startTime * 1000);
+			end[i] = (int) (endTime * 1000) + 1000;
 		}
 
 		for (int i = 0; i < lines.length; i++) {
@@ -22,9 +22,8 @@ class Solution {
 					cnt++;
 				}
 			}
-			if (answer < cnt) {
-				answer = cnt;
-			}
+			answer = Math.max(answer, cnt);
+
 		}
 		return answer;
     }
