@@ -1,40 +1,31 @@
 import java.util.*;
 class Solution {
-    public static int[] start;
-    public static int[] end;
-    public static int max = 0;
-    public static int N;
     public int solution(String[] lines) {
         int answer = 0;
-        N = lines.length;
-        
-        start = new int[N];
-        end = new int[N];
-        
-        for(int i=0;i<lines.length;i++) {
-            String[] str = lines[i].split(" ");
-            double time = doubleTime(str[1]);
-            double sec = Double.parseDouble(str[2].substring(0,str[2].length()-1));
-            double s = time - sec + 0.001;
-            start[i] = (int)(s*1000);
-            end[i] = (int)(time*1000) + 1000;
-        }
-        for(int i=0;i<N;i++) {
-            int cnt = 0;
-            for(int j=i;j<N;j++) {
-                if(end[i] > start[j]) {
-                    cnt++;
-                }
-            }
-            if(answer < cnt) {
-                answer = cnt;
-            }
-        }
-        return answer;
-    }
-    public static double doubleTime(String s) {
-        String[] str = s.split(":");
-        double time = Double.parseDouble(str[0])*3600 + Double.parseDouble(str[1])*60 + Double.parseDouble(str[2]);
-        return time;
+		int[] start = new int[lines.length];
+		int[] end = new int[lines.length];
+
+		for (int i = 0; i < lines.length; i++) {
+			String[] traffic = lines[i].split(" ");
+			String[] endTimeData = traffic[1].split(":");
+			double endTime = Double.parseDouble(endTimeData[0]) * 3600 + Double.parseDouble(endTimeData[1])* 60 + Double.parseDouble(endTimeData[2]);
+			double startTime = endTime - Double.parseDouble(traffic[2].substring(0, traffic[2].length() - 1)) + 0.001;
+
+			start[i] = (int)(startTime * 1000);
+			end[i] = (int)(endTime * 1000) + 1000;
+		}
+
+		for (int i = 0; i < lines.length; i++) {
+			int cnt = 0;
+			for (int j = i; j < lines.length; j++) {
+				if (end[i] > start[j]) {
+					cnt++;
+				}
+			}
+			if (answer < cnt) {
+				answer = cnt;
+			}
+		}
+		return answer;
     }
 }
