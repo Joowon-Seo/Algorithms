@@ -29,10 +29,7 @@ class Solution {
         for(int i = 0; i < storage.length; i++) {
             for(int j = 0; j < w; j ++) {
                 if(storage[i][j] + 1 == num) {
-                    // System.out.println(storage[i][j]);
-                    // number가 1일 때, 상자가 없는 부분도 해당 로직을 타게됨 따라서 answer가 오답으로 바뀜
                     answer = dfs(i, j, 1);
-                    return answer;
                 }
             }
         }
@@ -43,7 +40,6 @@ class Solution {
     
     public static int dfs(int row, int col, int cnt) {
         if(row + 1 >= 100 || storage[row + 1][col] == 0) {
-            // System.out.println(storage[row+1][col]);
             return cnt;
         }
         return dfs(row + 1, col, cnt + 1);
